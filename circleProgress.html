@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>circleProgress using Canvas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <style>
+        tr.label {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        tr.circle {
+            text-align: center;
+        }
+
+        tr.code {
+            vertical-align: top;
+        }
+    </style>
+    <script type="application/javascript" src="circleProgress.min.js"></script>
+</head>
+<body>
+<a href="#" onclick="showMe();">Show me!</a>
+<table>
+    <tr class="label">
+        <td>1. Default options</td>
+        <td>2. Custom options</td>
+    </tr>
+    <tr class="circle">
+        <td>
+            <canvas id="circle-progress-default" width="200" height="200"></canvas>
+        </td>
+        <td>
+            <canvas id="circle-progress-custom" width="200" height="200"></canvas>
+        </td>
+    </tr>
+    <tr class="code">
+        <td>
+            <pre>
+    circleProgress({
+        id: 'circle-progress-default'
+    });
+            </pre>
+        </td>
+        <td>
+            <pre>
+    circleProgress({
+        id: 'circle-progress-custom',
+        progress: 70, // default: 100
+        duration: 2000, // default: 1000
+        fps: 5, // default: 24
+        color: 'red', // default: 'rgb(52, 145, 204)'
+        bgColor: 'green', // default: 'rgb(230, 230, 230)'
+        textColor: 'blue', // default: 'black'
+        progressWith: 0.15, // default: 0.25 (r)
+        fontScale: 0.5, // default: 0.4 (r)
+        toFixed: 1  // default: 0
+    });
+            </pre>
+        </td>
+    </tr>
+    <tr class="label">
+        <td>3. Zero progress</td>
+        <td>4. No animation</td>
+    </tr>
+    <tr class="circle">
+        <td>
+            <canvas id="circle-progress-zero" width="200" height="200"></canvas>
+        </td>
+        <td>
+            <canvas id="circle-progress-no-animation" width="200" height="200"></canvas>
+        </td>
+    </tr>
+    <tr class="code">
+        <td>
+            <pre>
+    circleProgress({
+        id: 'circle-progress-zero',
+        progress: 0 // default: 100
+    });
+            </pre>
+        </td>
+        <td>
+            <pre>
+    circleProgress({
+        id: 'circle-progress-no-animation',
+        duration: 0 // default: 1000
+    });
+            </pre>
+        </td>
+    </tr>
+</table>
+<script type="application/javascript">
+    var showMe = function () {
+        circleProgress({
+            id: 'circle-progress-default'
+        });
+        circleProgress({
+            id: 'circle-progress-custom',
+            progress: 70, // default: 100
+            duration: 2000, // default: 1000
+            fps: 5, // default: 24
+            color: 'red', // default: 'rgb(52, 145, 204)'
+            bgColor: 'green', // default: 'rgb(230, 230, 230)'
+            textColor: 'blue', // default: 'black'
+            progressWith: 0.15, // default: 0.25 (r)
+            fontScale: 0.5, // default: 0.4 (r)
+            toFixed: 1  // default: 0
+        });
+        circleProgress({
+            id: 'circle-progress-zero',
+            progress: 0 // default: 100
+        });
+        circleProgress({
+            id: 'circle-progress-no-animation',
+            duration: 0 // default: 1000
+        });
+    };
+    showMe();
+</script>
+</body>
+</html>

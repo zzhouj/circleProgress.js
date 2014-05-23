@@ -1,0 +1,32 @@
+{
+  "name": "circleProgress.js",
+  "version": "0.0.1",
+  "description": "animation circle progress using canvas",
+  "main": "circleProgress.js",
+  "scripts": {
+    "test": "circleProgress.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zzhouj/circleProgress.js.git"
+  },
+  "keywords": [
+    "circle",
+    "progress",
+    "animation",
+    "canvas",
+    "html5",
+    "javascript"
+  ],
+  "author": "justin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zzhouj/circleProgress.js/issues"
+  },
+  "homepage": "https://github.com/zzhouj/circleProgress.js",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-uglify": "^0.4.0"
+  }
+}
