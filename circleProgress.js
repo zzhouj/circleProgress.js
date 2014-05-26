@@ -15,7 +15,7 @@
 
         options.toFixed = options.toFixed || 0;
         var canvas = document.getElementById(options.id);
-        if (canvas == null) {
+        if (canvas == null || canvas.getContext == null) {
             return;
         }
         options.width = canvas.width;
