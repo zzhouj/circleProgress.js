@@ -6,7 +6,7 @@
         if (options.duration !== 0) {
             options.duration = options.duration || 1000;
         }
-        options.fps = options.fps || 24;
+        options.fps = 60;    // requestAnimationFrame / cancelAnimationFrame
         options.color = options.color || 'rgb(52, 145, 204)';
         options.bgColor = options.bgColor || 'rgb(230, 230, 230)';
         options.textColor = options.textColor || 'black';
@@ -26,15 +26,15 @@
             if (options.current < options.progress && options.duration > 0) {
                 drawCircleProgress(options);
                 options.current += options.progress * (1000 / options.fps) / options.duration;
-                canvas.setAttribute('data-timeid', setTimeout(step, (1000 / options.fps)));
+                canvas.setAttribute('data-requestID', requestAnimationFrame(step));
             } else {
                 options.current = options.progress;
                 drawCircleProgress(options);
-                canvas.removeAttribute('data-timeid');
+                canvas.removeAttribute('data-requestID');
             }
         };
 
-        clearTimeout(canvas.getAttribute('data-timeid'));
+        cancelAnimationFrame(canvas.getAttribute('data-requestID'));
         options.current = 0;
         step();
     };
