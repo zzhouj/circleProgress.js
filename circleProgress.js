@@ -58,6 +58,7 @@
         var endAngle = startAngle + Math.PI * 2 * current / 100;
         var fontSize = Math.floor(r1 * fontScale);
 
+        ctx.save();
         ctx.clearRect(0, 0, width, height);
 
         ctx.beginPath();
@@ -84,6 +85,7 @@
         var text = '' + current.toFixed(options.toFixed) + '%';
         var textWidth = ctx.measureText(text).width;
         ctx.fillText(text, x - textWidth / 2, y + fontSize / 2);
+        ctx.restore();
     };
 
     window.circleProgress = circleProgress;
