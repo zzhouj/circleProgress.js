@@ -22,11 +22,11 @@
         options.height = canvas.height;
         options.context = canvas.getContext('2d');
 
-        var drawNext = function () {
+        var step = function () {
             if (options.current < options.progress && options.duration > 0) {
                 drawCircleProgress(options);
                 options.current += options.progress * (1000 / options.fps) / options.duration;
-                canvas.setAttribute('data-timeid', setTimeout(drawNext, (1000 / options.fps)));
+                canvas.setAttribute('data-timeid', setTimeout(step, (1000 / options.fps)));
             } else {
                 options.current = options.progress;
                 drawCircleProgress(options);
@@ -36,7 +36,7 @@
 
         clearTimeout(canvas.getAttribute('data-timeid'));
         options.current = 0;
-        drawNext();
+        step();
     };
 
     var drawCircleProgress = function (options) {
