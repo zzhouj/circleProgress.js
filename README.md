@@ -6,7 +6,7 @@ Animation circle progress using html5 canvas.
 Features
 ========
 
-+ Small size with only **1.39 KB** when minified.
++ Small size with only **1.48 kB** when minified.
 + Pure javascript and no other dependencies.
 + Animation progress increase.
 + Many custom options supported.
@@ -35,7 +35,6 @@ Usage
             id: 'circle-progress-custom',
             progress: 70, // default: 100
             duration: 2000, // default: 1000
-            fps: 5, // default: 24
             color: 'red', // default: 'rgb(52, 145, 204)'
             bgColor: 'green', // default: 'rgb(230, 230, 230)'
             textColor: 'blue', // default: 'black'
