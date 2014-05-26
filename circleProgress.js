@@ -40,7 +40,7 @@
     };
 
     var drawCircleProgress = function (options) {
-        var context = options.context;
+        var ctx = options.context;
         var width = options.width;
         var height = options.height;
         var current = options.current;
@@ -58,32 +58,32 @@
         var endAngle = startAngle + Math.PI * 2 * current / 100;
         var fontSize = Math.floor(r1 * fontScale);
 
-        context.clearRect(0, 0, width, height);
+        ctx.clearRect(0, 0, width, height);
 
-        context.beginPath();
+        ctx.beginPath();
         if (current > 0) {
-            context.arc(x, y, r1, startAngle, endAngle, true);
-            context.arc(x, y, r2, endAngle, startAngle, false);
+            ctx.arc(x, y, r1, startAngle, endAngle, true);
+            ctx.arc(x, y, r2, endAngle, startAngle, false);
         } else {
-            context.arc(x, y, r1, 0, Math.PI * 2, true);
-            context.arc(x, y, r2, Math.PI * 2, 0, false);
+            ctx.arc(x, y, r1, 0, Math.PI * 2, true);
+            ctx.arc(x, y, r2, Math.PI * 2, 0, false);
         }
-        context.closePath();
-        context.fillStyle = bgColor;
-        context.fill();
+        ctx.closePath();
+        ctx.fillStyle = bgColor;
+        ctx.fill();
 
-        context.beginPath();
-        context.arc(x, y, r1, startAngle, endAngle, false);
-        context.arc(x, y, r2, endAngle, startAngle, true);
-        context.closePath();
-        context.fillStyle = color;
-        context.fill();
+        ctx.beginPath();
+        ctx.arc(x, y, r1, startAngle, endAngle, false);
+        ctx.arc(x, y, r2, endAngle, startAngle, true);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
 
-        context.fillStyle = textColor;
-        context.font = '' + fontSize + 'px arial';
+        ctx.fillStyle = textColor;
+        ctx.font = '' + fontSize + 'px arial';
         var text = '' + current.toFixed(options.toFixed) + '%';
-        var textWidth = context.measureText(text).width;
-        context.fillText(text, x - textWidth / 2, y + fontSize / 2);
+        var textWidth = ctx.measureText(text).width;
+        ctx.fillText(text, x - textWidth / 2, y + fontSize / 2);
     };
 
     window.circleProgress = circleProgress;
