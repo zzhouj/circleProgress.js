@@ -82,9 +82,9 @@
 
         ctx.fillStyle = textColor;
         ctx.font = '' + fontSize + 'px arial';
-        var text = '' + current.toFixed(options.toFixed) + '%';
-        var textWidth = ctx.measureText(text).width;
-        ctx.fillText(text, x - textWidth / 2, y + fontSize / 2);
+        ctx.textBaseline = 'middle';
+        ctx.textAlign = 'center';
+        ctx.fillText('' + current.toFixed(options.toFixed) + '%', x, y);
         ctx.restore();
     };
 
