@@ -10,7 +10,7 @@
         options.color = options.color || 'rgb(52, 145, 204)';
         options.bgColor = options.bgColor || 'rgb(230, 230, 230)';
         options.textColor = options.textColor || 'black';
-        options.progressWith = options.progressWith || 0.25; //r
+        options.progressWidth = options.progressWidth || 0.25; //r
         options.fontScale = options.fontScale || 0.4; //r
 
         options.toFixed = options.toFixed || 0;
@@ -47,13 +47,13 @@
         var color = options.color;
         var bgColor = options.bgColor;
         var textColor = options.textColor;
-        var progressWith = options.progressWith;
+        var progressWidth = options.progressWidth;
         var fontScale = options.fontScale;
 
         var x = width / 2;
         var y = height / 2;
         var r1 = Math.floor(Math.min(width, height) / 2);
-        var r2 = Math.floor(r1 * (1 - progressWith));
+        var r2 = Math.floor(r1 * (1 - progressWidth));
         var startAngle = -Math.PI / 2;
         var endAngle = startAngle + Math.PI * 2 * current / 100;
         var fontSize = Math.floor(r1 * fontScale);

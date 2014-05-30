@@ -38,7 +38,7 @@ Usage
             color: 'red', // default: 'rgb(52, 145, 204)'
             bgColor: 'green', // default: 'rgb(230, 230, 230)'
             textColor: 'blue', // default: 'black'
-            progressWith: 0.15, // default: 0.25 (r)
+            progressWidth: 0.15, // default: 0.25 (r)
             fontScale: 0.5, // default: 0.4 (r)
             toFixed: 1  // default: 0
         });
