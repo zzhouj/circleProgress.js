@@ -1,4 +1,16 @@
 (function (window) {
+    var requestAnimationFrame = (function () {
+        return window.requestAnimationFrame ||
+                function (cb) {
+                    return window.setTimeout(cb, 1000 / 60);
+                };
+    })();
+
+    var cancelAnimationFrame = (function () {
+        return window.cancelAnimationFrame ||
+                window.clearTimeout;
+    })();
+
     var circleProgress = function (options) {
         if (options.progress !== 0) {
             options.progress = options.progress || 100;
