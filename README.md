@@ -1,7 +1,7 @@
 circleProgress.js
 =================
 
-Animation circle progress using html5 canvas.
+Animation circle progress using html5 svg.
 
 Features
 ========
@@ -25,11 +25,11 @@ Usage
 
         <script type="text/javascript" src="circleProgress.min.js"></script>
 
-2. Add canvas elements:
+2. Add svg elements:
 
-        <canvas id="circle-progress-custom" width="200" height="200"></canvas>
+        <svg id="circle-progress-custom" width="200" height="200"></svg>
 
-3. Render canvas with custom options:
+3. Render svg with custom options:
 
         circleProgress({
             id: 'circle-progress-custom',

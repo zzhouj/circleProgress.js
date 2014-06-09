@@ -1,14 +1,14 @@
 (function (window) {
     var requestAnimationFrame = (function () {
         return window.requestAnimationFrame ||
-                function (cb) {
-                    return window.setTimeout(cb, 1000 / 60);
-                };
+            function (cb) {
+                return window.setTimeout(cb, 1000 / 60);
+            };
     })();
 
     var cancelAnimationFrame = (function () {
         return window.cancelAnimationFrame ||
-                window.clearTimeout;
+            window.clearTimeout;
     })();
 
     var circleProgress = function (options) {
@@ -26,78 +26,108 @@
         options.fontScale = options.fontScale || 0.4; //r
 
         options.toFixed = options.toFixed || 0;
-        var canvas = document.getElementById(options.id);
-        if (canvas == null || canvas.getContext == null) {
+        var svg = document.getElementById(options.id);
+        if (svg == null) {
             return;
         }
-        options.width = canvas.width;
-        options.height = canvas.height;
-        options.context = canvas.getContext('2d');
+        svg.textContent = '';
+
+        options.width = parseInt(svg.getAttribute('width'));
+        options.height = parseInt(svg.getAttribute('height'));
+
+        options.x = options.width / 2;
+        options.y = options.height / 2;
+        options.r1 = Math.floor(Math.min(options.width, options.height) / 2);
+        options.r2 = Math.floor(options.r1 * (1 - options.progressWidth));
+        options.r = Math.floor((options.r1 + options.r2) / 2);
+        options.strokeWidth = options.r1 - options.r2;
+        options.fontSize = Math.floor(options.r1 * options.fontScale);
+
+        options.fullBgCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        options.fullBgCircle.setAttribute('cx', options.x);
+        options.fullBgCircle.setAttribute('cy', options.y);
+        options.fullBgCircle.setAttribute('r', options.r);
+        options.fullBgCircle.setAttribute('stroke-width', options.strokeWidth);
+        options.fullBgCircle.setAttribute('stroke', options.bgColor);
+        options.fullBgCircle.setAttribute('fill', 'none');
+        svg.appendChild(options.fullBgCircle);
+
+        options.fullProgressCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        options.fullProgressCircle.setAttribute('cx', options.x);
+        options.fullProgressCircle.setAttribute('cy', options.y);
+        options.fullProgressCircle.setAttribute('r', options.r);
+        options.fullProgressCircle.setAttribute('stroke-width', options.strokeWidth);
+        options.fullProgressCircle.setAttribute('stroke', options.color);
+        options.fullProgressCircle.setAttribute('fill', 'none');
+        svg.appendChild(options.fullProgressCircle);
+
+        options.bgCircle = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        options.bgCircle.setAttribute('d', 'M0, 0');
+        options.bgCircle.setAttribute('stroke-width', options.strokeWidth);
+        options.bgCircle.setAttribute('stroke', options.bgColor);
+        options.bgCircle.setAttribute('fill', 'none');
+        svg.appendChild(options.bgCircle);
+
+        options.progressCircle = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        options.progressCircle.setAttribute('d', 'M0, 0');
+        options.progressCircle.setAttribute('stroke-width', options.strokeWidth);
+        options.progressCircle.setAttribute('stroke', options.color);
+        options.progressCircle.setAttribute('fill', 'none');
+        svg.appendChild(options.progressCircle);
+
+        options.progressText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        options.progressText.setAttribute('x', options.x);
+        options.progressText.setAttribute('y', options.y + options.fontSize / 3);
+        options.progressText.setAttribute('text-anchor', 'middle');
+        options.progressText.setAttribute('font-size', options.fontSize);
+        options.progressText.setAttribute('stroke', 'none');
+        options.progressText.setAttribute('fill', options.textColor);
+        svg.appendChild(options.progressText);
 
         var step = function () {
             if (options.current < options.progress && options.duration > 0) {
                 drawCircleProgress(options);
                 options.current += options.progress * (1000 / options.fps) / options.duration;
-                canvas.setAttribute('data-requestID', requestAnimationFrame(step));
+                svg.setAttribute('data-requestID', requestAnimationFrame(step));
             } else {
                 options.current = options.progress;
                 drawCircleProgress(options);
-                canvas.removeAttribute('data-requestID');
+                svg.removeAttribute('data-requestID');
             }
         };
 
-        cancelAnimationFrame(canvas.getAttribute('data-requestID'));
+        cancelAnimationFrame(svg.getAttribute('data-requestID'));
         options.current = 0;
         step();
     };
 
     var drawCircleProgress = function (options) {
-        var ctx = options.context;
-        var width = options.width;
-        var height = options.height;
         var current = options.current;
-        var color = options.color;
-        var bgColor = options.bgColor;
-        var textColor = options.textColor;
-        var progressWidth = options.progressWidth;
-        var fontScale = options.fontScale;
+        var x = options.x;
+        var y = options.y;
+        var r = options.r;
 
-        var x = width / 2;
-        var y = height / 2;
-        var r1 = Math.floor(Math.min(width, height) / 2);
-        var r2 = Math.floor(r1 * (1 - progressWidth));
         var startAngle = -Math.PI / 2;
         var endAngle = startAngle + Math.PI * 2 * current / 100;
-        var fontSize = Math.floor(r1 * fontScale);
 
-        ctx.save();
-        ctx.clearRect(0, 0, width, height);
+        options.fullBgCircle.style.cssText = (current === 0) ? '' : 'display:none';
+        options.fullProgressCircle.style.cssText = (current === 100) ? '' : 'display:none';
 
-        ctx.beginPath();
-        if (current > 0) {
-            ctx.arc(x, y, r1, startAngle, endAngle, true);
-            ctx.arc(x, y, r2, endAngle, startAngle, false);
-        } else {
-            ctx.arc(x, y, r1, 0, Math.PI * 2, true);
-            ctx.arc(x, y, r2, Math.PI * 2, 0, false);
-        }
-        ctx.closePath();
-        ctx.fillStyle = bgColor;
-        ctx.fill();
+        var x1 = x + r * Math.cos(startAngle);
+        var y1 = y + r * Math.sin(startAngle);
+        var x2 = x + r * Math.cos(endAngle);
+        var y2 = y + r * Math.sin(endAngle);
 
-        ctx.beginPath();
-        ctx.arc(x, y, r1, startAngle, endAngle, false);
-        ctx.arc(x, y, r2, endAngle, startAngle, true);
-        ctx.closePath();
-        ctx.fillStyle = color;
-        ctx.fill();
+        var largeArc = (endAngle - startAngle) < Math.PI ? 0 : 1;
+        var sweep = 1;
 
-        ctx.fillStyle = textColor;
-        ctx.font = '' + fontSize + 'px arial';
-        ctx.textBaseline = 'middle';
-        ctx.textAlign = 'center';
-        ctx.fillText('' + current.toFixed(options.toFixed) + '%', x, y);
-        ctx.restore();
+        options.bgCircle.setAttribute('d', 'M' + x1 + ' ' + y1 +
+            ' A' + r + ' ' + r + ' 0 ' + (1 - largeArc) + ' ' + (1 - sweep) + ' ' + x2 + ' ' + y2);
+
+        options.progressCircle.setAttribute('d', 'M' + x1 + ' ' + y1 +
+            ' A' + r + ' ' + r + ' 0 ' + largeArc + ' ' + sweep + ' ' + x2 + ' ' + y2);
+
+        options.progressText.textContent = '' + current.toFixed(options.toFixed) + '%';
     };
 
     window.circleProgress = circleProgress;
